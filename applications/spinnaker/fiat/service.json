@@ -1,0 +1,20 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "spinnaker-fiat"
+    },
+    "spec": {
+        "selector": {
+            "app": "spinnaker-fiat"
+        },
+        "ports": [
+            {
+                "name": "fiat",
+                "protocol": "TCP",
+                "port": 7003,
+                "targetPort": 7003
+            }
+        ]
+    }
+}

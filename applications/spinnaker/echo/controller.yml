@@ -3,36 +3,36 @@ apiVersion: "v1"
 kind: "ReplicationController"
 metadata:
   labels:
-    load-balancer-spinnaker-igor: "true"
-    replication-controller: "spinnaker-igor-v000"
-  name: "spinnaker-igor-v000"
+    load-balancer-spinnaker-echo: "true"
+    replication-controller: "spinnaker-echo-v000"
+  name: "spinnaker-echo-v000"
   namespace: "spinnaker"
 spec:
   replicas: 1
   selector:
-    replication-controller: "spinnaker-igor-v000"
+    replication-controller: "spinnaker-echo-v000"
   template:
     metadata:
       labels:
-        load-balancer-spinnaker-igor: "true"
-        replication-controller: "spinnaker-igor-v000"
-        app: "spinnaker-igor"
+        load-balancer-spinnaker-echo: "true"
+        replication-controller: "spinnaker-echo-v000"
+        app: "spinnaker-echo"
     spec:
       containers:
       - args: []
         command: []
         env: []
-        image: "armory/spinnaker-igor-slim:latest"
+        image: "armory/spinnaker-echo-slim:latest:latest"
         imagePullPolicy: "Always"
-        name: "igor"
+        name: "echo"
         ports:
-        - containerPort: 8088
+        - containerPort: 8089
           name: "http"
           protocol: "TCP"
         resources: {}
         terminationMessagePath: "/dev/termination-log"
         volumeMounts:
-        - mountPath: "/opt/igor/config"
+        - mountPath: "/opt/echo/config"
           name: "spinnaker-config"
       dnsPolicy: "ClusterFirst"
       imagePullSecrets:

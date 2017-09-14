@@ -22,7 +22,7 @@ spec:
       - args: []
         command: []
         env: []
-        image: "quay.io/spinnaker/orca:latest"
+        image: "armory/spinnaker-orca-slim:latest"
         imagePullPolicy: "Always"
         name: "orca"
         ports:
