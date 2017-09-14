@@ -3,36 +3,36 @@ apiVersion: "v1"
 kind: "ReplicationController"
 metadata:
   labels:
-    load-balancer-spinnaker-igor: "true"
-    replication-controller: "spinnaker-igor-v000"
-  name: "spinnaker-igor-v000"
+    load-balancer-spinnaker-fiat: "true"
+    replication-controller: "spinnaker-fiat-v000"
+  name: "spinnaker-fiat-v000"
   namespace: "spinnaker"
 spec:
   replicas: 1
   selector:
-    replication-controller: "spinnaker-igor-v000"
+    replication-controller: "spinnaker-fiat-v000"
   template:
     metadata:
       labels:
-        load-balancer-spinnaker-igor: "true"
-        replication-controller: "spinnaker-igor-v000"
-        app: "spinnaker-igor"
+        load-balancer-spinnaker-fiat: "true"
+        replication-controller: "spinnaker-fiat-v000"
+        app: "spinnaker-fiat"
     spec:
       containers:
       - args: []
         command: []
         env: []
-        image: "docker.io/armory/spinnaker-igor-slim:latest"
+        image: "localhost:5000/fiat:latest"
         imagePullPolicy: "Always"
-        name: "igor"
+        name: "fiat"
         ports:
-        - containerPort: 8088
+        - containerPort: 7003
           name: "http"
           protocol: "TCP"
         resources: {}
         terminationMessagePath: "/dev/termination-log"
         volumeMounts:
-        - mountPath: "/opt/igor/config"
+        - mountPath: "/opt/fiat/config"
           name: "spinnaker-config"
       dnsPolicy: "ClusterFirst"
       imagePullSecrets:
