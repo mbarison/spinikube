@@ -3,13 +3,13 @@ server:
   address: ${services.gate.host:localhost}
 
 # Circular references since we're already using 'services'
-# services:
-#   clouddriver:
-#     baseUrl: ${services.clouddriver.baseUrl:localhost:7002}
-#   orca:
-#     baseUrl: ${services.orca.baseUrl:localhost:8083}
-#   front50:
-#     baseUrl: ${services.front50.baseUrl:localhost:8080}
+services:
+  clouddriver:
+    baseUrl: ${services.clouddriver.baseUrl:localhost:7002}
+  orca:
+    baseUrl: ${services.orca.baseUrl:localhost:8083}
+  front50:
+    baseUrl: ${services.front50.baseUrl:localhost:8080}
 # #optional services:
 #   echo:
 #     enabled: ${services.echo.enabled:true}

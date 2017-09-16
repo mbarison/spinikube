@@ -22,7 +22,7 @@ spec:
       - args: []
         command: []
         env: []
-        image: "localhost:5000/echo:latest"
+        image: "quay.io/spinnaker/echo:latest"
         imagePullPolicy: "Always"
         name: "echo"
         ports:

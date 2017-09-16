@@ -83,7 +83,6 @@ kubernetes:
       dockerRegistries:
         - accountName: ${providers.kubernetes.primaryCredentials.dockerRegistryAccount}
         - accountName: spinnaker-registry
-        - accountName: spinnaker-local
 
 openstack:
   enabled: ${providers.openstack.enabled:false}
@@ -130,10 +129,9 @@ dockerRegistry:
       username: ${providers.dockerRegistry.primaryCredentials.username:}
       passwordFile: ${providers.dockerRegistry.primaryCredentials.passwordFile:}
       repositories: ${providers.dockerRegistry.primaryCredentials.repository:}
-    - address: http://localhost:5000/v2
-      name: spinnaker-local
-    - address: http://spinnaker-registry:5000/v2
-      name: spinnaker-registry
+    - name: spinnaker-registry
+      address: http://spinnaker-registry:5000/v2
+
 
 credentials:
   primaryAccountTypes: ${providers.aws.primaryCredentials.name}, ${providers.google.primaryCredentials.name}, ${providers.cf.primaryCredentials.name}, ${providers.azure.primaryCredentials.name}

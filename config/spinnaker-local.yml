@@ -107,7 +107,7 @@ providers:
     # http://www.spinnaker.io/v1.0/docs/target-deployment-setup#section-kubernetes-cluster-setup
 
     # NOTE: enabling kubernetes also requires enabling dockerRegistry.
-    enabled: ${SPINNAKER_KUBERNETES_ENABLED:false}
+    enabled: ${SPINNAKER_KUBERNETES_ENABLED:true}
     primaryCredentials:
       # These credentials use authentication information at ~/.kube/config
       # by default.
@@ -122,7 +122,7 @@ providers:
     # However, for convienience, we tie docker and kubernetes together
     # since kubernetes (and only kubernetes) depends on this docker provider
     # configuration.
-    enabled: ${SPINNAKER_KUBERNETES_ENABLED:false}
+    enabled: ${SPINNAKER_KUBERNETES_ENABLED:true}
 
     primaryCredentials:
       name: my-docker-registry
@@ -186,14 +186,15 @@ services:
     # If you are using a remote redis server, you can set the host here.
     # If the remote server is on a different port or url, you can add
     # a "port" or "baseUrl" field here instead.
-    host: localhost
+    connection: redis://spinnaker-redis:6379
+    baseUrl: redis://spinnaker-redis:6379
 
   cassandra:
     # If you are using a remote cassandra server, you can set the host here.
     # If the remote server is on a different port or url, you can add
     # a "port" or "baseUrl" field here instead. You may also need to set
     # the cluster name. See the main spinnaker.yml file for more attributes.
-    host: localhost
+    host: spinnaker-cassandra
 
   docker:
     # This target repository is used by the bakery to publish baked docker images.
@@ -212,10 +213,13 @@ services:
     # on your own if you are interested.
     enabled: ${services.igor.enabled:false}
     defaultMaster:
-      name: Jenkins # The display name for this server
-      baseUrl:
-      username:
-      password:
+      name: jenkins # The display name for this server
+      baseUrl: http://spinnaker-jenkins:8080
+      username: jenkins
+      password: jenkins
+
+  orca:
+    baseUrl: http://spinnaker-orca:8083
 
   travis:
     # If you are integrating Travis, set its location here using the baseUrl
@@ -243,6 +247,10 @@ services:
     enabled: false
 
   clouddriver:
+    default:
+      account:
+        env: minikube
+    baseUrl: http://spinnaker-clouddriver:7002
     aws:
       udf:
         # Controls whether UserDataProviders are used to populate user data of
@@ -255,7 +263,8 @@ services:
   igor:
     # If you are integrating Jenkins then you must also enable Spinnaker's
     # "igor" subsystem.
-    enabled: false
+    enabled: true
+    baseUrl: http://spinnaker-igor:8088
 
   deck:
     # Frontend configuration.
@@ -264,22 +273,26 @@ services:
     #baseUrl: http://spinnaker.mydomain.com
     #gateUrl: ${services.deck.baseUrl}/gate
     #bakeryUrl: ${services.deck.baseUrl}/rosco
+    baseUrl: http://spinnaker-deck:80
     auth:
       enabled: false
 
   rosco:
+    baseUrl: http://spinnaker-rosco:8087
     # You need to provide the fully-qualified path to the directory containing
     # the packer templates.
     # They typically live in rosco's config/packer directory.
     configDir: /opt/rosco/config/packer
 
   fiat:
+    baseUrl: http://spinnaker-fiat:7003
     enabled: false
 
   chaos:
     enabled: false
 
   front50:
+    baseUrl: http://spinnaker-front50:8080
     cassandra:
       enabled: true
     redis:
@@ -303,6 +316,7 @@ services:
       storageContainerName: front50
 
   echo:
+    baseUrl: http://spinnaker-echo:8089
     # Persistence mechanism to use
     cassandra:
       enabled: false
