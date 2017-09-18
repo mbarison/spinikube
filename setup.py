@@ -102,10 +102,13 @@ os.system("rm -rf minikube")
 #print "seeding spinnaking images"
 o("./podexec jenkins /usr/local/jenkins/jobs/seed.sh")
 
-components = ('front50', 'clouddriver', 'rosco', 'orca', 'igor', 'gate', 'deck', 'echo', 'fiat')
-for component in components:
-  c("applications/spinnaker/" + component + "/controller.yml")
-  c("applications/spinnaker/" + component + "/service.json")
+# components = ('front50', 'clouddriver', 'rosco', 'orca', 'igor', 'gate', 'deck', 'echo')
+# for component in components:
+#   c("applications/spinnaker/" + component + "/controller.yml")
+#   c("applications/spinnaker/" + component + "/service.json")
+
+c("applications/spinnaker/controller.yml")
+c("applications/spinnaker/service.json")
 
 poll()
 
@@ -122,7 +125,7 @@ services = '''
           {
     "title": "Spinnaker Dashboard",
     "description": "Spinnaker UI",
-    "link": "''' + cmdOut("minikube service spinnaker-deck --namespace spinnaker --url") + '''"
+    "link": "''' + cmdOut("minikube service spinnaker --namespace spinnaker --url") + '''"
     },
 
 
@@ -136,7 +139,7 @@ services = '''
     {
     "title": "Jenkins",
     "description": "Automation Server",
-    "link": "''' + cmdOut("minikube service spinnaker-jenkins --namespace spinnaker --url") + '''"
+    "link": "''' + cmdOut("minikube service jenkins --namespace spinnaker --url") + '''"
     },
 
         {
@@ -180,3 +183,7 @@ poll()
 # o("./podexec spinnaker cqlsh -e 'COPY front50.pipeline FROM \'/SpiniKube/pipelines/pipelines.csv\' WITH HEADER = \'true\';'")
 
 o("minikube service spinnaker-start -n spinnaker")
+o("minikube service spinnaker -n spinnaker")
+o("minikube service kubedash -n spinnaker")
+o("minikube service jenkins -n spinnaker")
+o("minikube service spinnaker-registryui -n spinnaker")

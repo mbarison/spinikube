@@ -2,11 +2,11 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "spinnaker-jenkins"
+        "name": "jenkins"
     },
     "spec": {
         "selector": {
-            "app": "spinnaker-jenkins"
+            "app": "jenkins"
         },
         "type": "NodePort",
         "ports": [

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd /root
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-java -jar jenkins-cli.jar -s http://localhost:8080/ build seed-images --username jenkins --password jenkins -s
+java -jar jenkins-cli.jar -s http://localhost:8080/ build spinnaker-deck --username jenkins --password jenkins -s
 
 # for job in front50 clouddriver rosco orca gate igor deck echo fiat
 # do

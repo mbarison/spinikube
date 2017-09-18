@@ -22,7 +22,7 @@ spec:
       - args: []
         command: []
         env: []
-        image: "localhost:5000/fiat:latest"
+        image: "quay.io/spinnaker/fiat:latest"
         imagePullPolicy: "Always"
         name: "fiat"
         ports:

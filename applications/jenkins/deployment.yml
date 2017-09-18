@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spinnaker-jenkins
+  name: jenkins
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: spinnaker-jenkins
+        app: jenkins
     spec:
       containers:
-      - name: spinnaker-jenkins
+      - name: jenkins
         securityContext:
           privileged: true
         image: chadmoon/jenkins-dind
