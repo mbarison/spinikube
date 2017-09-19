@@ -19,6 +19,20 @@ spec:
         app: "spinnaker"
     spec:
       containers:
+      # - args: []
+      #   command: []
+      #   env: []
+      #   image: "gcr.io/spinnaker-marketplace/halyard:stable"
+      #   imagePullPolicy: "Always"
+      #   name: "halyard"
+      #   ports: []
+      #   resources: {}
+      #   terminationMessagePath: "/dev/termination-log"
+      #   volumeMounts:
+      #   - mountPath: "/workdir/.spinnaker"
+      #     name: "spinnaker-config"
+      #   - mountPath: "/root/.kube"
+      #     name: "minikube-config"
       - args: []
         command: []
         env: []
@@ -38,9 +52,7 @@ spec:
           name: "minikube-config"
       - args: []
         command: []
-        env:
-        - name: API_HOST
-          value: "http://192.168.99.100:30001"
+        env: []
         image: "quay.io/spinnaker/deck:latest"
         imagePullPolicy: "Always"
         name: "deck"

@@ -44,9 +44,9 @@ FROM quay.io/spinnaker/deck:latest
 
 MAINTAINER steve.neuharth@granicus.com
 
-EXPOSE 9000
+RUN sed -ie 's/localhost:8084/192.168.99.100:30001/' /opt/deck/html/settings.js
 
-ENV API_HOST http://192.168.99.100:30001
+EXPOSE 9000
 
 EOT
 

@@ -275,7 +275,12 @@ services:
     #bakeryUrl: ${services.deck.baseUrl}/rosco
     auth:
       enabled: false
-    baseUrl: http://192.168.99.100:30001
+    # baseUrl: http://192.168.99.100:30001
+    # gateUrl: http://192.168.99.100:30001/gate
+
+  # gate:
+  #   baseUrl: http://192.168.99.100:30001
+  #   overrideBaseUrl: http://192.168.99.100:30001
 
   rosco:
     # baseUrl: http://spinnaker-rosco:8087
@@ -319,9 +324,9 @@ services:
     # baseUrl: http://spinnaker-echo:8089
     # Persistence mechanism to use
     cassandra:
-      enabled: false
-    inMemory:
       enabled: true
+    inMemory:
+      enabled: false
 
     cron:
       # Allow pipeline triggers to run periodically via cron expressions.

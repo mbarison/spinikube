@@ -93,7 +93,7 @@ with open("minikube/config", "w") as text_file:
 
 time.sleep(1)
 
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/spinnaker-local.yml --from-file=./config/spinnaker.yml --from-file=./config/settings.js --from-file=./config/fiat.yml --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
+os.system("kubectl create secret generic spinnaker-config --from-file=./config/spinnaker-local.yml --from-file=./config/spinnaker.yml --from-file=./config/fiat.yml --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
@@ -139,7 +139,7 @@ services = '''
     {
     "title": "Jenkins",
     "description": "Automation Server",
-    "link": "''' + cmdOut("minikube service jenkins --namespace spinnaker --url") + '''"
+    "link": "''' + cmdOut("minikube service spinnaker-jenkins --namespace spinnaker --url") + '''"
     },
 
         {
