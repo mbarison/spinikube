@@ -53,7 +53,7 @@ spec:
       - args: []
         command: []
         env: []
-        image: "quay.io/spinnaker/deck:latest"
+        image: "localhost:5000/deck:latest"
         imagePullPolicy: "Always"
         name: "deck"
         ports:
