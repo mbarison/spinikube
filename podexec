@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -x
 
 COLUMNS=`tput cols`
 LINES=`tput lines`
@@ -8,5 +9,6 @@ POD="$GETPOD"
 PODID=( $POD )
 PODID=${PODID[0]}
 
-CMD=$2
-kubectl exec --namespace spinnaker -i -t $PODID env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM $2
+CMD="${@:2}"
+kubectl exec --namespace spinnaker -i -t $PODID -- env COLUMNS=$COLUMNS LINES=$LINES TERM=$TERM $CMD
+set +x

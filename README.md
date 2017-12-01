@@ -56,7 +56,7 @@ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.6.0/miniku
 
 ## Install and start SpiniKube
 ```
-git clone https://github.com/kenzanlabs/spinikube.git && cd SpiniKube
+git clone https://github.com/kenzanlabs/spinikube.git SpiniKube/ && cd SpiniKube
 python setup.py
 ```
 

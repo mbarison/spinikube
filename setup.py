@@ -40,9 +40,10 @@ o("kubectl create namespace spinnaker")
 
 c("applications/kubedash/bundle.yaml")
 
-c("applications/tectonic/pull.yml")
-c("applications/tectonic/tectonic-console.yaml")
-c("applications/tectonic/tectonic.json")
+# Can't get tectonic from private repo
+#c("applications/tectonic/pull.yml")
+#c("applications/tectonic/tectonic-console.yaml")
+#c("applications/tectonic/tectonic.json")
 
 components = ('jenkins', 'registry', 'registryui', 'debweb')
 for component in components:
@@ -129,12 +130,6 @@ services = '''
     "link": "''' + cmdOut("minikube service kubernetes-dashboard --namespace kube-system --url") + '''"
     },
 
-        {
-    "title": "Tectonic Console",
-    "description": "Alternative management UI",
-    "link": "''' + cmdOut("minikube service tectonic --namespace spinnaker --url") + '''"
-    },
-
 
     {
     "title": "Jenkins",
@@ -167,6 +162,7 @@ os.system("rm -f applications/start/services.json")
 with open("applications/start/services.json", "w") as text_file:
   text_file.write(services)
 
+# TODO: Replace with configmap
 os.system("kubectl create secret generic start-config --from-file=./applications/start/index.html --from-file=./applications/start/services.json --namespace spinnaker")
 
 #cqlsh -e "COPY front50.pipeline TO '/front50.pipeline.csv' WITH HEADER = 'true'"
@@ -177,9 +173,9 @@ c("applications/start/service.json")
 poll()
 
 #add example pipeline
-o("./podexec spinnaker apt-get update")
-o("./podexec spinnaker apt-get install -y git")
-o("./podexec spinnaker git clone git@github.com:moondev/SpiniKube.git /SpiniKube")
-o("./podexec spinnaker cqlsh -e 'COPY front50.pipeline FROM \'/SpiniKube/pipelines/pipelines.csv\' WITH HEADER = \'true\';'")
+o("./podexec cassandra apt-get update")
+o("./podexec cassandra apt-get install -y git")
+o("./podexec cassandra git clone https://github.com/mbarison/spinikube.git /SpiniKube")
+o("./podexec cassandra cqlsh -e 'COPY front50.pipeline FROM \'/SpiniKube/pipelines/pipelines.csv\' WITH HEADER = \'true\';'")
 
 o("minikube service spinnaker-start -n spinnaker")
