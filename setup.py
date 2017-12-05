@@ -30,9 +30,9 @@ def c(cmd):
   o("kubectl create -f " + cmd + " --namespace spinnaker")
   time.sleep(2)
 
-o("minikube delete")
+#o("minikube delete")
 
-o("minikube start --memory 10000 --cpus 4 --disk-size=60g")
+#o("minikube start --memory 10000 --cpus 4 --disk-size=60g")
 
 #o("kubectl delete namespace spinnaker")
 #time.sleep(30)
@@ -41,9 +41,9 @@ o("kubectl create namespace spinnaker")
 c("applications/kubedash/bundle.yaml")
 
 # Can't get tectonic from private repo
-#c("applications/tectonic/pull.yml")
-#c("applications/tectonic/tectonic-console.yaml")
-#c("applications/tectonic/tectonic.json")
+# c("applications/tectonic/pull.yml")
+# c("applications/tectonic/tectonic-console.yaml")
+# c("applications/tectonic/tectonic.json")
 
 components = ('jenkins', 'registry', 'registryui', 'debweb')
 for component in components:
@@ -94,7 +94,7 @@ with open("minikube/config", "w") as text_file:
 
 time.sleep(1)
 
-os.system("kubectl create secret generic spinnaker-config --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
+os.system("kubectl create secret generic spinnaker-config --from-file=./config/spinnaker-local.yml --from-file=./config/spinnaker.yml --from-file=./config/fiat.yml --from-file=./config/echo.yml --from-file=./config/igor.yml --from-file=./config/gate.yml --from-file=./config/orca.yml --from-file=./config/rosco.yml --from-file=./config/front50.yml --from-file=./config/clouddriver.yml --namespace spinnaker")
 
 os.system("kubectl create secret generic minikube-config --from-file=./minikube/config --from-file=./minikube/ca.crt --from-file=./minikube/apiserver.crt --from-file=./minikube/apiserver.key --namespace spinnaker")
 
@@ -103,15 +103,22 @@ os.system("rm -rf minikube")
 #print "seeding spinnaking images"
 o("./podexec jenkins /usr/local/jenkins/jobs/seed.sh")
 
-components = ('front50', 'clouddriver', 'rosco', 'orca', 'igor', 'gate', 'deck')
-for component in components:
-  c("applications/spinnaker/" + component + "/controller.yml")
-  c("applications/spinnaker/" + component + "/service.json")
+# components = ('front50', 'clouddriver', 'rosco', 'orca', 'igor', 'gate', 'deck', 'echo')
+# for component in components:
+#   c("applications/spinnaker/" + component + "/controller.yml")
+#   c("applications/spinnaker/" + component + "/service.json")
+
+c("applications/spinnaker/controller.yml")
+c("applications/spinnaker/service.json")
 
 poll()
 
 time.sleep(2)
-
+    #     {
+    # "title": "Tectonic Console",
+    # "description": "Alternative management UI",
+    # "link": "''' + cmdOut("minikube service tectonic --namespace spinnaker --url") + '''"
+    # },
 services = '''
 {
 "services" : [
@@ -119,7 +126,7 @@ services = '''
           {
     "title": "Spinnaker Dashboard",
     "description": "Spinnaker UI",
-    "link": "''' + cmdOut("minikube service spinnaker-deck --namespace spinnaker --url") + '''"
+    "link": "''' + cmdOut("minikube service spinnaker --namespace spinnaker --url") + '''"
     },
 
 
@@ -129,7 +136,6 @@ services = '''
     "description": "Management UI",
     "link": "''' + cmdOut("minikube service kubernetes-dashboard --namespace kube-system --url") + '''"
     },
-
 
     {
     "title": "Jenkins",
@@ -179,3 +185,7 @@ o("./podexec cassandra git clone https://github.com/mbarison/spinikube.git /Spin
 o("./podexec cassandra cqlsh -e 'COPY front50.pipeline FROM \'/SpiniKube/pipelines/pipelines.csv\' WITH HEADER = \'true\';'")
 
 o("minikube service spinnaker-start -n spinnaker")
+o("minikube service spinnaker -n spinnaker")
+o("minikube service kubedash -n spinnaker")
+o("minikube service jenkins -n spinnaker")
+o("minikube service spinnaker-registryui -n spinnaker")

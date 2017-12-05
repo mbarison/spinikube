@@ -9,7 +9,7 @@
         <hudson.model.StringParameterDefinition>
           <name>SERVICE</name>
           <description></description>
-          <defaultValue>deck</defaultValue>
+          <defaultValue>fiat</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -38,22 +38,38 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cat &lt;&lt;EOT &gt;&gt; Dockerfile
+      <command>docker run --rm -v `pwd`:/workdir java:8 bash -c &quot;cd /workdir; GRADLE_USER_HOME=cache ./gradlew buildDeb -x test&quot;
 
-FROM quay.io/spinnaker/deck:latest
+cd ${SERVICE}-web/build/distributions
 
-MAINTAINER steve.neuharth@granicus.com
+rm -f Dockerfile
 
-RUN sed -ie 's/localhost:8084/192.168.99.100:30001/' /opt/deck/html/settings.js
+cat &lt;&lt;EOT &gt;&gt; Dockerfile
 
-EXPOSE 9000
+FROM java:8
+
+MAINTAINER cmoon@kenzan.com
+
+COPY *.deb /deb/${SERVICE}.deb
+RUN cd /deb &amp;&amp; dpkg -i ${SERVICE}.deb
+RUN rm /deb/${SERVICE}.deb
+CMD [&quot;/opt/${SERVICE}/bin/${SERVICE}&quot;]
 
 EOT
 
-docker build -t spinnaker-registry:5000/deck .
-docker push spinnaker-registry:5000/deck</command>
+docker build --rm -t spinnaker-registry:5000/${SERVICE} .
+docker push spinnaker-registry:5000/${SERVICE}</command>
     </hudson.tasks.Shell>
   </builders>
-  <publishers/>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>${SERVICE}-web/build/distributions/*.deb</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
   <buildWrappers/>
 </project>

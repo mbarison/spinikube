@@ -13,7 +13,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>for i in front50 clouddriver rosco igor orca gate igor
+      <command>for i in front50 clouddriver rosco igor orca gate igor fiat echo
 do
 	docker pull quay.io/spinnaker/$i
     docker tag quay.io/spinnaker/$i spinnaker-registry:5000/$i

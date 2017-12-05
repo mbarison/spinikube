@@ -3,36 +3,36 @@ apiVersion: "v1"
 kind: "ReplicationController"
 metadata:
   labels:
-    load-balancer-spinnaker-rosco: "true"
-    replication-controller: "spinnaker-rosco-v000"
-  name: "spinnaker-rosco-v000"
+    load-balancer-spinnaker-echo: "true"
+    replication-controller: "spinnaker-echo-v000"
+  name: "spinnaker-echo-v000"
   namespace: "spinnaker"
 spec:
   replicas: 1
   selector:
-    replication-controller: "spinnaker-rosco-v000"
+    replication-controller: "spinnaker-echo-v000"
   template:
     metadata:
       labels:
-        load-balancer-spinnaker-front50: "true"
-        replication-controller: "spinnaker-rosco-v000"
-        app: "spinnaker-rosco"
+        load-balancer-spinnaker-echo: "true"
+        replication-controller: "spinnaker-echo-v000"
+        app: "spinnaker-echo"
     spec:
       containers:
       - args: []
         command: []
         env: []
-        image: "quay.io/spinnaker/rosco:latest"
+        image: "quay.io/spinnaker/echo:latest"
         imagePullPolicy: "Always"
-        name: "rosco"
+        name: "echo"
         ports:
-        - containerPort: 8087
+        - containerPort: 8089
           name: "http"
           protocol: "TCP"
         resources: {}
         terminationMessagePath: "/dev/termination-log"
         volumeMounts:
-        - mountPath: "/opt/rosco/config"
+        - mountPath: "/opt/echo/config"
           name: "spinnaker-config"
       dnsPolicy: "ClusterFirst"
       imagePullSecrets:
