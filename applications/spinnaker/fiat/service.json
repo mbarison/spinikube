@@ -2,19 +2,18 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "spinnaker-deck"
+        "name": "spinnaker-fiat"
     },
     "spec": {
         "selector": {
-            "app": "spinnaker-deck"
+            "app": "spinnaker-fiat"
         },
-        "type": "NodePort",
         "ports": [
             {
-                "name": "clouddriver",
+                "name": "fiat",
                 "protocol": "TCP",
-                "port": 9000,
-                "targetPort": 9000
+                "port": 7003,
+                "targetPort": 7003
             }
         ]
     }

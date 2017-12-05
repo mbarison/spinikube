@@ -26,7 +26,7 @@ spec:
         imagePullPolicy: "Always"
         name: "deck"
         ports:
-        - containerPort: 80
+        - containerPort: 9000
           name: "http"
           protocol: "TCP"
         resources: {}

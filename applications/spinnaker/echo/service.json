@@ -2,19 +2,18 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
-        "name": "spinnaker-deck"
+        "name": "spinnaker-echo"
     },
     "spec": {
         "selector": {
-            "app": "spinnaker-deck"
+            "app": "spinnaker-echo"
         },
-        "type": "NodePort",
         "ports": [
             {
-                "name": "clouddriver",
+                "name": "echo",
                 "protocol": "TCP",
-                "port": 9000,
-                "targetPort": 9000
+                "port": 8089,
+                "targetPort": 8089
             }
         ]
     }
